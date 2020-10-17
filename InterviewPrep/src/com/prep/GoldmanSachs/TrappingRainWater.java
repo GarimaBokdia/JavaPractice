@@ -6,42 +6,53 @@ public class TrappingRainWater {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int arr[] = {0,1,0,2,1,0,1,3,2,1,2,1};
+		int arr[] = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
 		int dropsCollected = trap(arr);
 		System.out.println(dropsCollected);
 	}
 	/*
-	 * Algorithm: 
-Traverse the array from start to end.
-For every element, traverse the array from start to that index and find the maximum height (a) and traverse the array from the current index to end and find the maximum height (b).
-The amount of water that will be stored in this column is min(a,b) – array[i], add this value to total amount of water stored
-Print the total amount of water stored.
+	 *Basic Insight: 
+An element of the array can store water if there are higher bars on left and right. 
+The amount of water to be stored in every element can be found out by finding the heights 
+of bars on the left and right sides. The idea is to compute the amount of water that can be 
+stored in every element of the array. 
+Example 
+
+Consider the array {3, 0, 0, 2, 0, 4}, three units of water can be stored three indexes
+ 1 and 2, and one unit of water at index 3, and three units of water at index 4. 
+
 	 */
 	 public static int trap(int[] height) {
-		 int rainWater = 0; 
-		    
-		 
-		 int left=0, right=0;
-		 for(int i=1;i<height.length-1;i++)
-		 {
-			 // Find maximum element on its left 
-			 left=height[i];
-			 for(int j=0;j<i;j++)
+		 int rainWaterBucket = 0; 
+		 int leftMax=0,rightMax=0;	 
+		 int leftIndex=0, rightIndex=height.length-1;
+		
+		 //Traversing through the array using two pointers 
+		 while(leftIndex <= rightIndex) {
+			 //If bar on left is smaller than it will be decisive factor
+			 if(height[leftIndex]<height[rightIndex])
 			 {
-				 left=Math.max(left, height[j]);
+				 //if current bar on left is bigger than left max then reset it as it will be decisiove factor
+				 //else collect the water in the rain water bucket requal to difference of these
+				 if(height[leftIndex]>leftMax)
+					 leftMax=height[leftIndex];
+				 else
+					 rainWaterBucket += leftMax-height[leftIndex];
+				 
+				 leftIndex++;
+				 
 			 }
-			 
-			// Find maximum element on its rigth 
-			 right=height[i];
-			 for(int j=i+1;j<height.length;j++)
+			 else
 			 {
-				 right=Math.max(right, height[j]);
+				 if(height[rightIndex]>rightMax)
+					 rightMax=height[rightIndex];
+				 else 
+					 rainWaterBucket += rightMax-height[rightIndex];
+				 
+				 rightIndex--;
 			 }
-			 
-			 rainWater += Math.min(left,right)-height[i];
 			 
 		 }
-		 
-		 return rainWater;
+		 return rainWaterBucket;
 	 }
 }
