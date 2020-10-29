@@ -10,7 +10,8 @@ public class StockBuySellMaxProfit {
 	public static void main(String[] args) {
 		StockBuySellMaxProfit sbs = new StockBuySellMaxProfit();
 		  // stock prices on consecutive days 
-		int price[] = { 1, 5, 2, 3, 7, 6, 4, 5 };
+		int price[] ={7,1,5,3,6,4};
+			//{ 1, 5, 2, 3, 7, 6, 4, 5 };
 			//{ 100, 180, 260, 310, 40, 535, 695 }; 
         int n = price.length; 
          // function call 
